@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure(2) do |config|
+
+  # define box
+  config.vm.box = "bento/centos-6.7"
+  config.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.7_chef-provisionerless.box"
+  
+  # install nvm
+  config.vm.provision "shell", inline: "curl -s -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash && echo 'source ~/.nvm/nvm.sh' >> ~/.bashrc", privileged: false 
+
+  # install node.js stable
+  config.vm.provision "shell", inline: "source ~/.bashrc && nvm install stable &> /dev/null && nvm use stable", privileged: false
+  
+end
